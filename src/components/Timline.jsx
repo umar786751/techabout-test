@@ -4,8 +4,17 @@ import TimelineItem from "./TimelineItem.jsx";
 import image from "../assets/pexels.jpg";
 
 const Timeline = () => {
-  const [selectedTab, setSelectedTab] = useState("reviews");
+  const tab = localStorage.getItem('key: tab');
+  const [selectedTab, setSelectedTab] = useState(() => {
+    const savedTab = localStorage.getItem('tab');
+    return savedTab || 'reviews'; // 'reviews' is the default if nothing is in localStorage
+  });
   const [posts, setPosts] = useState([]);
+
+  function onSelect(currentTab) {
+    setSelectedTab(currentTab);
+    localStorage.setItem('tab', currentTab);
+  }
 
   useEffect(() => {
     setPosts(data.filter((item) => item.category === selectedTab));
@@ -13,7 +22,7 @@ const Timeline = () => {
 
   return (
     <div className="py-12">
-      <Tabs selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      <Tabs selectedTab={selectedTab} onSelect={onSelect} />
       <hr className="my-10 block h-[1px] bg-neutral-100" />
       <div className="border-l-2 relative border-black pl-9 lg:pl-16 ml-9 lg:ml-10 flex flex-grow flex-col gap-5">
         {posts.map((post) => (

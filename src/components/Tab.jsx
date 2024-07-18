@@ -1,11 +1,11 @@
-export const Tabs = ({ selectedTab, setSelectedTab }) => {
+export const Tabs = ({ selectedTab, onSelect }) => {
   const tabs = ["reviews", "news", "latest", "editorials", "categories"];
 
   return (
     <div className={"flex items-center gap-6"}>
       {tabs.map((title) => (
         <button
-          onClick={() => setSelectedTab(title)}
+          onClick={() => onSelect(title)}
           key={title}
           className={
             (selectedTab === title ? " bg-neutral-900 text-white " : "") +
